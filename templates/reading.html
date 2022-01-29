@@ -1,0 +1,36 @@
+
+{% extends "storypage.html" %}
+{% block main %}
+<style>
+    h2
+    {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #aaa;
+    }
+</style>
+<script>
+    window.scrollTo(0,document.body.scrollHeight);
+</script>
+<div class="container">
+    <h2><pre>{{title}}</pre></h2>
+   
+   <div class="wrap">
+    {% for v,line in data %} 
+    {% if not v %}
+    <div class="para left">
+     <p> <pre>{{line}}</pre></p>
+      </div>
+     <br>
+     {% endif %}
+     {% if v %}
+     <div class="para right">
+      <p> <pre>{{line}}</pre></p>
+       </div>
+      <br>
+      {% endif %}
+     {% endfor %}   
+   </div>
+</div>
+  {% endblock %}
+  

@@ -1,0 +1,70 @@
+
+
+{% extends "storypage.html" %}
+{% block main %}
+<script>
+  window.scrollTo(0,document.body.scrollHeight);
+</script>
+<div id="my_camera"></div>
+<a  href="{% url 'x' %}"><input class="butn" type=button value="Go" ></a>
+<div style="visibility: hidden;" id="results" ></div>
+<!-- Script -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+<!-- Code to handle taking the snapshot and displaying it locally -->
+<script language="JavaScript">
+
+ // Configure a few settings and attach camera
+ Webcam.set({
+  width: 1200,
+  height: 600,
+  image_format: 'jpeg',
+  jpeg_quality: 100
+ });
+ Webcam.attach( '#my_camera' );
+function take_snapshot() {
+ // take snapshot and get image data
+ Webcam.snap( function(data_uri) {
+ // display results in page
+  imgArr.push(data_uri);
+ } );
+
+}
+
+let count = 0;
+let imgArr = [];
+  var myvar = setInterval(function(){
+    if(Webcam.loaded){
+      if(count==2){
+        clearInterval(myvar);
+        console.log(imgArr);
+        let x = sendData();
+        console.log(x);
+      }
+      take_snapshot()
+      count++;
+    }
+  },1000);
+async function sendData(){
+  json = null;
+  await fetch('http://127.0.0.1:8000/home/index/', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(imgArr)
+  })
+  .then((response) => response.json())
+  .then((responseJSON) => {
+     json = responseJSON;
+
+     return json;
+  }).catch(err =>{
+      json = err;
+      return json;
+  });
+  Webcam.reset()
+}
+</script> 
+{% endblock %}

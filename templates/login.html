@@ -1,0 +1,36 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %}
+<style>
+body {
+  background-repeat: no-repeat;
+  background-image: url("/static/images/coverl.png");
+  background-size: cover;
+}
+</style>
+<div class="row m-0">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+        <h1>Novella</h1>
+    </div>
+</div>
+<div class="row m-0">
+    <div class="col-lg-6">
+    </div>
+    <div class="col-lg-6">
+        <form action="{% url 'postsignIn' %}" method="post">
+            {% csrf_token %}
+            <br/>
+           <!-- Enter Your Email: -->
+            <input  placeholder="Your email" type="email"id="Email" name="email"><br><br>
+           <!-- Enter Your Password: -->
+            <input placeholder="Your password"  type="password" id="Password" name="pass"><br><br>
+            <input type="submit" value="SignIn"><br><br>
+        
+            <a href="{% url 'signup' %}"><button type="button"  >SignUp</button></a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
